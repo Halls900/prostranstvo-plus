@@ -286,6 +286,7 @@
                         </div>
                     </div>
 
+                    <!-- БЛОК: Текст «О нас» -->
                     <div class="bg-[#1a1423] p-6 rounded-2xl border border-gray-800">
                         <h3 class="text-white font-bold mb-4 border-b border-gray-800 pb-2">Текст «О нас»</h3>
                         <div class="space-y-4">
@@ -294,6 +295,22 @@
                                 <textarea id="input-about-text" rows="5" class="w-full bg-[#0b0f19] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#d82573] resize-none"></textarea>
                             </div>
                             <button onclick="saveAboutTextToFirebase()" class="btn-glow bg-[#d82573] hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-bold w-full mt-2 transition-colors">Отправить в базу данных</button>
+                        </div>
+                    </div>
+                    
+                    <!-- НОВЫЙ БЛОК: Отправка в чат -->
+                    <div class="bg-[#1a1423] p-6 rounded-2xl border border-gray-800 lg:col-span-2">
+                        <h3 class="text-white font-bold mb-4 border-b border-gray-800 pb-2">
+                            <i class="fas fa-paper-plane text-[#d82573] mr-2"></i> Отправка сообщения в Беседу ВК
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Текст сообщения (от имени MRHALLS159)</label>
+                                <textarea id="input-chat-message" rows="3" class="w-full bg-[#0b0f19] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#d82573] resize-none" placeholder="Всем привет! Добро пожаловать в комьюнити..."></textarea>
+                            </div>
+                            <button onclick="sendDirectMessage()" class="btn-glow bg-[#d82573] hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-bold w-full mt-2 transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i> Отправить в беседу
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -540,6 +557,40 @@
                     aboutText: inputAboutText.value
                 }).then(() => showNotification('Текст обновлен на сайте ✔️', 'bg-[#d82573]'))
                   .catch(() => showNotification('Ошибка: Нет прав доступа ❌', 'bg-red-500'));
+            };
+
+            // НОВАЯ ФУНКЦИЯ: Отправка сообщения в чат ВКонтакте
+            window.sendDirectMessage = async function() {
+                const text = document.getElementById('input-chat-message').value;
+                if (!text) {
+                    showNotification('Введите текст сообщения ❌', 'bg-red-500');
+                    return;
+                }
+
+                // Ссылка на ваш защищенный Cloudflare Worker
+                const workerUrl = 'https://late-snowflake-6a03.gumbald7777.workers.dev'; 
+                
+                // Точный ID вашей беседы
+                const peerId = '2000001865'; 
+
+                try {
+                    const response = await fetch(workerUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: text, peer_id: peerId })
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification('Сообщение успешно отправлено! ✔️', 'bg-[#d82573]');
+                        document.getElementById('input-chat-message').value = ''; 
+                    } else {
+                        showNotification('Ошибка API: ' + (result.error || 'Сбой') + ' ❌', 'bg-red-500');
+                    }
+                } catch (err) {
+                    showNotification('Ошибка связи с сервером Cloudflare ❌', 'bg-red-500');
+                }
             };
 
             // ВК СТАТИСТИКА
