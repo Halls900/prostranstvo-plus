@@ -153,6 +153,10 @@
                     <a id="btn-group-link" href="https://vk.ru/plus_size_chat" target="_blank" class="btn-glow text-white rounded-full px-10 py-4 font-bold text-lg flex items-center justify-center tracking-wide">Группа ВК</a>
                     <a id="btn-chat-link" href="https://vk.me/join/KJE7qfNtvn9YuxX2O7rJekPMtHEU2w0iLhY=" target="_blank" class="btn-glow text-white rounded-full px-10 py-4 font-bold text-lg flex items-center justify-center tracking-wide">Беседа ВК</a>
                 </div>
+
+                <!-- Контейнер для виджета VK ID -->
+                <div id="vk_auth_container" class="mt-8 flex justify-center w-full min-h-[44px]"></div>
+
             </div>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#d82573] rounded-full mix-blend-screen filter blur-[120px] opacity-10 pointer-events-none"></div>
         </section>
@@ -550,6 +554,31 @@
                     if (el) el.setAttribute('data-target', data.response[0].members_count);
                 }
             };
+        });
+    </script>
+    
+    <!-- Скрипт авторизации ВКонтакте (VK ID) -->
+    <script src="https://unpkg.com/@vkid/sdk@3.0.0/dist-umd/VKIDSDK.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if ('VKIDSDK' in window) {
+                const VKID = window.VKIDSDK;
+                VKID.Config.init({
+                    app: 54792766,
+                    redirectUrl: 'https://halls900.github.io/prostranstvo-plus/',
+                    responseMode: VKID.ConfigResponseMode.Redirect
+                });
+                
+                const container = document.getElementById('vk_auth_container');
+                if (container) {
+                    const oneTap = new VKID.OneTap();
+                    oneTap.render({
+                        container: container,
+                        scheme: VKID.Scheme.DARK,
+                        lang: VKID.Languages.RUS
+                    });
+                }
+            }
         });
     </script>
 </body>
