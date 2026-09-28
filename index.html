@@ -70,7 +70,7 @@
         <span id="notification-message">Сообщение</span>
     </div>
 
-    <!-- ФОРМА АВТОРИЗАЦИИ АДМИНА -->
+    <!-- Форма авторизации админа -->
     <div id="admin-auth-overlay" class="fixed inset-0 z-[100] hidden bg-[#0b0f19]/95 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-[#1a1423] border border-[#d82573]/30 p-8 rounded-3xl shadow-2xl max-w-md w-full fade-in">
             <div class="w-16 h-16 bg-gradient-to-tr from-[#d82573] to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-md transform rotate-3 mx-auto mb-6">П</div>
@@ -116,8 +116,8 @@
                         <i class="fas fa-lock text-[10px]" id="nav-about-icon"></i> О нас
                     </a>
                     
-                    <a id="nav-stats" href="#" onclick="showSection('section-stats')" class="text-gray-300 hover:text-white transition-colors font-semibold flex items-center gap-1.5">
-                        Статистика
+                    <a id="nav-stats" href="#" onclick="showSection('section-stats')" class="text-gray-300 hover:text-white transition-colors font-semibold hidden items-center gap-1.5 cursor-pointer">
+                        <i class="fas fa-chart-bar text-xs text-[#d82573]"></i> Статистика
                     </a>
 
                     <a href="#" id="nav-admin" onclick="showSection('section-admin')" class="text-[#d82573] hover:text-pink-400 transition-colors font-bold hidden flex items-center gap-1.5">
@@ -151,21 +151,57 @@
                     <a id="btn-group-link" href="https://vk.ru/plus_size_chat" target="_blank" class="btn-glow text-white rounded-full px-10 py-4 font-bold text-lg flex items-center justify-center tracking-wide">Группа ВК</a>
                     <a id="btn-chat-link" href="https://vk.me/join/KJE7qfNtvn9YuxX2O7rJekPMtHEU2w0iLhY=" target="_blank" class="btn-glow text-white rounded-full px-10 py-4 font-bold text-lg flex items-center justify-center tracking-wide">Беседа ВК</a>
                 </div>
-
-                <div id="vk_auth_container" class="mt-8 flex justify-center w-full min-h-[44px]"></div>
-
             </div>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#d82573] rounded-full mix-blend-screen filter blur-[120px] opacity-10 pointer-events-none"></div>
         </section>
 
         <!-- О нас -->
         <section id="section-about" class="page-section hidden py-20 bg-[#0d1323] relative flex-grow">
-            <!-- Код раздела О нас -->
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">О нашем проекте</h2>
+                    <div class="w-20 h-1 bg-[#d82573] mx-auto rounded-full"></div>
+                </div>
+                <div class="bg-[#1a1423] p-8 md:p-12 rounded-3xl border border-gray-800 shadow-2xl">
+                    <p id="about-display-text" class="text-gray-300 text-lg md:text-xl leading-relaxed whitespace-pre-line text-center">
+                        Мы являемся одним из самых активных и дружелюбных комьюнити ВКонтакте, посвященным Plus-Size моде, бодипозитиву и безусловному принятию себя.
+                    </p>
+                </div>
+            </div>
         </section>
 
         <!-- Статистика -->
         <section id="section-stats" class="page-section hidden py-20 bg-[#0b0f19] relative flex-grow">
-            <!-- Код раздела Статистика -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Статистика сообщества</h2>
+                    <div class="w-20 h-1 bg-[#d82573] mx-auto rounded-full"></div>
+                    <p class="text-gray-400 mt-4">Актуальные данные группы ВКонтакте в реальном времени</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#1a1423] p-8 rounded-2xl border border-gray-800 text-center shadow-lg hover:border-[#d82573]/50 transition-all">
+                        <div class="w-16 h-16 bg-[#d82573]/10 text-[#d82573] rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div id="stats-members-count" class="text-4xl font-extrabold text-white mb-2 tracking-tight">Загрузка...</div>
+                        <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">Участников в группе</div>
+                    </div>
+                    <div class="bg-[#1a1423] p-8 rounded-2xl border border-gray-800 text-center shadow-lg hover:border-purple-500/50 transition-all">
+                        <div class="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="text-4xl font-extrabold text-white mb-2 tracking-tight">24/7</div>
+                        <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">Живое общение</div>
+                    </div>
+                    <div class="bg-[#1a1423] p-8 rounded-2xl border border-gray-800 text-center shadow-lg hover:border-pink-500/50 transition-all">
+                        <div class="w-16 h-16 bg-pink-500/10 text-pink-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="text-4xl font-extrabold text-white mb-2 tracking-tight">100%</div>
+                        <div class="text-gray-400 text-sm font-semibold uppercase tracking-wider">Поддержка и уют</div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Админка -->
@@ -189,7 +225,6 @@
                     <div class="bg-[#1a1423] p-6 rounded-2xl border border-gray-800 lg:col-span-2">
                         <h3 class="text-white font-bold mb-4 border-b border-gray-800 pb-2"><i class="fas fa-toggle-on text-[#d82573] mr-2"></i> Управление функциями (Включить/Выключить)</h3>
                         <div class="flex flex-col gap-5">
-                            <!-- Фичи -->
                             <div class="flex items-center justify-between bg-[#0b0f19] p-4 rounded-xl border border-gray-800">
                                 <div>
                                     <h4 class="text-white font-semibold">Раздел «О нас»</h4>
@@ -241,22 +276,21 @@
                         </div>
                     </div>
                     
-                    <!-- НОВЫЙ БЛОК: Отправка в чат с полем для Токена -->
+                    <!-- Отправка в чат -->
                     <div class="bg-[#1a1423] p-6 rounded-2xl border border-gray-800 lg:col-span-2 shadow-[0_0_20px_rgba(216,37,115,0.15)]">
                         <h3 class="text-white font-bold mb-4 border-b border-[#d82573]/50 pb-2">
                             <i class="fas fa-paper-plane text-[#d82573] mr-2"></i> Отправка сообщения в Беседу ВК
                         </h3>
                         <div class="space-y-4">
-                            <!-- НОВОЕ ПОЛЕ: Сюда вставлять ключ -->
                             <div>
-                                <label class="block text-pink-400 text-sm mb-1 font-semibold">Ваш рабочий токен ВКонтакте (вставьте сюда длинный ключ)</label>
+                                <label class="block text-pink-400 text-sm mb-1 font-semibold">Ваш рабочий токен ВКонтакте</label>
                                 <input type="password" id="input-vk-token" class="w-full bg-[#0b0f19] border border-[#d82573]/50 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#d82573] transition-colors" placeholder="vk1.a.XXXXX...">
-                                <p class="text-gray-500 text-xs mt-1">Ключ сохранится автоматически при отправке сообщения.</p>
+                                <p class="text-gray-500 text-xs mt-1">Ключ автоматически сохраняется в Firebase при отправке.</p>
                             </div>
 
                             <div>
                                 <label class="block text-gray-400 text-sm mb-1">Текст сообщения (от имени Максим VastegaProd)</label>
-                                <textarea id="input-chat-message" rows="3" class="w-full bg-[#0b0f19] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#d82573] resize-none" placeholder="Всем привет! Добро пожаловать..."></textarea>
+                                <textarea id="input-chat-message" rows="3" class="w-full bg-[#0b0f19] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#d82573] resize-none" placeholder="Всем привет!"></textarea>
                             </div>
                             <button onclick="sendDirectMessage()" class="btn-glow bg-[#d82573] hover:bg-pink-600 text-white px-4 py-3 rounded-lg text-md font-bold w-full mt-2 transition-colors flex items-center justify-center gap-2">
                                 <i class="fas fa-paper-plane"></i> Отправить в беседу
@@ -290,7 +324,8 @@
             measurementId: "G-BKJEQFTYSX"
         };
         
-        const VK_ACCESS_TOKEN = 'ВАШ_СЕРВИСНЫЙ_КЛЮЧ'; 
+        // Сервисный ключ приложения для загрузки количества участников группы
+        const VK_SERVICE_TOKEN = 'd956a7c7d956a7c7d956a7c798da12b5f9dd956d956a7c7'; 
         const GROUP_ID = 'plus_size_chat';
 
         firebase.initializeApp(firebaseConfig);
@@ -308,6 +343,9 @@
                 target.classList.remove('hidden');
                 setTimeout(() => target.classList.add('fade-in'), 10);
                 window.scrollTo(0, 0); 
+            }
+            if (sectionId === 'section-stats') {
+                loadVkStats();
             }
         }
 
@@ -347,6 +385,30 @@
         function closeLogin() { window.location.href = window.location.pathname; }
         function logoutAdmin() { auth.signOut().then(() => window.location.href = window.location.pathname); }
 
+        function loadVkStats() {
+            const countEl = document.getElementById('stats-members-count');
+            if (!VK_SERVICE_TOKEN) {
+                if (countEl) countEl.innerText = '—';
+                return;
+            }
+            const callbackName = 'vkCallback_' + Math.floor(Math.random() * 1000000);
+            window[callbackName] = function(data) {
+                if (data && data.response && data.response[0]) {
+                    const count = data.response[0].members_count;
+                    if (countEl) countEl.innerText = count ? count.toLocaleString('ru-RU') : '—';
+                } else {
+                    if (countEl) countEl.innerText = '—';
+                }
+                delete window[callbackName];
+                const scriptNode = document.getElementById(callbackName);
+                if (scriptNode) scriptNode.remove();
+            };
+            const script = document.createElement('script');
+            script.id = callbackName;
+            script.src = `https://api.vk.com/method/groups.getById?group_id=${GROUP_ID}&fields=members_count&access_token=${VK_SERVICE_TOKEN}&v=5.131&callback=${callbackName}`;
+            document.body.appendChild(script);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
             const isAdminUrl = urlParams.get('admin') === '1';
@@ -364,21 +426,62 @@
                 }
             });
 
+            // Слушатель настроек Firebase
             const settingsRef = db.ref('siteSettings');
             settingsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                if(data) {
-                    if(document.getElementById('feature-about')) document.getElementById('feature-about').checked = data.featureAbout;
-                    if(document.getElementById('feature-stats')) document.getElementById('feature-stats').checked = data.featureStats;
-                    if(document.getElementById('input-link-group')) document.getElementById('input-link-group').value = data.linkGroup || '';
-                    if(document.getElementById('input-link-chat')) document.getElementById('input-link-chat').value = data.linkChat || '';
-                    if(document.getElementById('input-about-text')) document.getElementById('input-about-text').value = data.aboutText || '';
-                    
-                    // Загружаем сохраненный токен ВК из базы
-                    if(document.getElementById('input-vk-token') && data.vkToken) {
-                        document.getElementById('input-vk-token').value = data.vkToken;
-                    }
+                const data = snapshot.val() || {};
+                
+                // Управление тумблерами в админке
+                const toggleAbout = document.getElementById('feature-about');
+                const toggleStats = document.getElementById('feature-stats');
+                if (toggleAbout) toggleAbout.checked = !!data.featureAbout;
+                if (toggleStats) toggleStats.checked = !!data.featureStats;
+
+                // Управление ссылкой "О нас" в навигации
+                const navAbout = document.getElementById('nav-about');
+                const navAboutIcon = document.getElementById('nav-about-icon');
+                if (data.featureAbout) {
+                    navAbout.className = "text-gray-300 hover:text-white transition-colors font-semibold flex items-center gap-1.5 cursor-pointer";
+                    navAbout.onclick = () => showSection('section-about');
+                    navAbout.title = "О нас";
+                    if (navAboutIcon) navAboutIcon.className = "hidden";
+                } else {
+                    navAbout.className = "text-gray-500 opacity-50 cursor-not-allowed font-semibold transition-all flex items-center gap-1.5";
+                    navAbout.onclick = (e) => { e.preventDefault(); return false; };
+                    navAbout.title = "Вкладка временно недоступна";
+                    if (navAboutIcon) navAboutIcon.className = "fas fa-lock text-[10px]";
                 }
+
+                // Управление ссылкой "Статистика" в навигации
+                const navStats = document.getElementById('nav-stats');
+                if (data.featureStats) {
+                    navStats.classList.remove('hidden');
+                    navStats.classList.add('flex');
+                } else {
+                    navStats.classList.add('hidden');
+                    navStats.classList.remove('flex');
+                }
+
+                // Поля ссылок и текста
+                if(document.getElementById('input-link-group')) document.getElementById('input-link-group').value = data.linkGroup || '';
+                if(document.getElementById('input-link-chat')) document.getElementById('input-link-chat').value = data.linkChat || '';
+                if(document.getElementById('input-about-text')) document.getElementById('input-about-text').value = data.aboutText || '';
+                if(document.getElementById('about-display-text') && data.aboutText) {
+                    document.getElementById('about-display-text').innerText = data.aboutText;
+                }
+                
+                // Сохраненный токен
+                if(document.getElementById('input-vk-token') && data.vkToken) {
+                    document.getElementById('input-vk-token').value = data.vkToken;
+                }
+            });
+
+            // Обработчики клика по чекбоксам
+            document.getElementById('feature-about').addEventListener('change', (e) => {
+                db.ref('siteSettings').update({ featureAbout: e.target.checked });
+            });
+            document.getElementById('feature-stats').addEventListener('change', (e) => {
+                db.ref('siteSettings').update({ featureStats: e.target.checked });
             });
 
             window.saveLinksToFirebase = function() {
@@ -394,13 +497,13 @@
                 }).then(() => showNotification('Текст обновлен ✔️', 'bg-[#d82573]'));
             };
 
-            // ОБНОВЛЕННАЯ ФУНКЦИЯ ОТПРАВКИ СООБЩЕНИЯ
+            // Отправка сообщения
             window.sendDirectMessage = async function() {
                 const text = document.getElementById('input-chat-message').value;
-                const token = document.getElementById('input-vk-token').value; // Берем токен из нового поля
+                const token = document.getElementById('input-vk-token').value;
 
                 if (!token) {
-                    showNotification('Вставьте токен ВКонтакте в поле выше ❌', 'bg-red-500');
+                    showNotification('Вставьте токен ВКонтакте ❌', 'bg-red-500');
                     return;
                 }
                 if (!text) {
@@ -408,7 +511,6 @@
                     return;
                 }
 
-                // Автоматически сохраняем ваш токен в базу, чтобы он остался там навсегда
                 db.ref('siteSettings').update({ vkToken: token });
 
                 const workerUrl = 'https://late-snowflake-6a03.gumbald7777.workers.dev'; 
@@ -418,7 +520,7 @@
                     const response = await fetch(workerUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: text, peer_id: peerId, token: token }) // Отправляем токен на сервер
+                        body: JSON.stringify({ message: text, peer_id: peerId, token: token })
                     });
 
                     const result = await response.json();
