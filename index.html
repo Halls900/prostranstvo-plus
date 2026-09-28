@@ -324,6 +324,13 @@
             measurementId: "G-BKJEQFTYSX"
         };
         
+        // ВАШИ EMAIL-АДРЕСА ВЛАДЕЛЬЦА (Впишите свою реальную почту, через которую логинитесь)
+        // Только эти пользователи получат доступ к админ-панели
+        const ADMIN_EMAILS = [
+            'ВАШ_EMAIL_ЗДЕСЬ@gmail.com', 
+            'admin@domain.ru'
+        ];
+
         // Сервисный ключ приложения для загрузки количества участников группы
         const VK_SERVICE_TOKEN = 'd956a7c7d956a7c7d956a7c798da12b5f9dd956d956a7c7'; 
         const GROUP_ID = 'plus_size_chat';
@@ -364,10 +371,7 @@
 
         function loginWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then(() => {
-                showNotification('Успешный вход через Google! ✔️', 'bg-[#d82573]');
-                document.getElementById('admin-auth-overlay').classList.add('hidden');
-            }).catch((error) => console.error(error));
+            auth.signInWithPopup(provider).catch((error) => console.error(error));
         }
 
         function loginAdmin() {
@@ -376,10 +380,7 @@
             if(!email || !pass) {
                 showNotification('Введите логин и пароль ❌', 'bg-red-500'); return;
             }
-            auth.signInWithEmailAndPassword(email, pass).then(() => {
-                showNotification('Успешный вход! ✔️', 'bg-[#d82573]');
-                document.getElementById('admin-auth-overlay').classList.add('hidden');
-            }).catch(() => showNotification('Ошибка входа ❌', 'bg-red-500'));
+            auth.signInWithEmailAndPassword(email, pass).catch(() => showNotification('Ошибка входа ❌', 'bg-red-500'));
         }
 
         function closeLogin() { window.location.href = window.location.pathname; }
@@ -416,10 +417,22 @@
             auth.onAuthStateChanged((user) => {
                 const navAdmin = document.getElementById('nav-admin');
                 const adminAuthOverlay = document.getElementById('admin-auth-overlay');
+                
                 if (user) {
-                    navAdmin.classList.remove('hidden');
-                    adminAuthOverlay.classList.add('hidden');
-                    if (isAdminUrl) showSection('section-admin');
+                    // ЖЕСТКАЯ ПРОВЕРКА: Сверяем почту с вашим белым списком
+                    if (ADMIN_EMAILS.includes(user.email)) {
+                        navAdmin.classList.remove('hidden');
+                        adminAuthOverlay.classList.add('hidden');
+                        showNotification('Успешный вход! ✔️', 'bg-[#d82573]');
+                        if (isAdminUrl) showSection('section-admin');
+                    } else {
+                        // Если вошел чужой человек, принудительно выкидываем его
+                        auth.signOut().then(() => {
+                            showNotification('Отказано в доступе: Вы не являетесь владельцем ❌', 'bg-red-500');
+                            navAdmin.classList.add('hidden');
+                            if (isAdminUrl) adminAuthOverlay.classList.remove('hidden');
+                        });
+                    }
                 } else {
                     navAdmin.classList.add('hidden');
                     if (isAdminUrl) adminAuthOverlay.classList.remove('hidden');
@@ -431,13 +444,11 @@
             settingsRef.on('value', (snapshot) => {
                 const data = snapshot.val() || {};
                 
-                // Управление тумблерами в админке
                 const toggleAbout = document.getElementById('feature-about');
                 const toggleStats = document.getElementById('feature-stats');
                 if (toggleAbout) toggleAbout.checked = !!data.featureAbout;
                 if (toggleStats) toggleStats.checked = !!data.featureStats;
 
-                // Управление ссылкой "О нас" в навигации
                 const navAbout = document.getElementById('nav-about');
                 const navAboutIcon = document.getElementById('nav-about-icon');
                 if (data.featureAbout) {
@@ -452,7 +463,6 @@
                     if (navAboutIcon) navAboutIcon.className = "fas fa-lock text-[10px]";
                 }
 
-                // Управление ссылкой "Статистика" в навигации
                 const navStats = document.getElementById('nav-stats');
                 if (data.featureStats) {
                     navStats.classList.remove('hidden');
@@ -462,7 +472,6 @@
                     navStats.classList.remove('flex');
                 }
 
-                // Поля ссылок и текста
                 if(document.getElementById('input-link-group')) document.getElementById('input-link-group').value = data.linkGroup || '';
                 if(document.getElementById('input-link-chat')) document.getElementById('input-link-chat').value = data.linkChat || '';
                 if(document.getElementById('input-about-text')) document.getElementById('input-about-text').value = data.aboutText || '';
@@ -470,13 +479,11 @@
                     document.getElementById('about-display-text').innerText = data.aboutText;
                 }
                 
-                // Сохраненный токен
                 if(document.getElementById('input-vk-token') && data.vkToken) {
                     document.getElementById('input-vk-token').value = data.vkToken;
                 }
             });
 
-            // Обработчики клика по чекбоксам
             document.getElementById('feature-about').addEventListener('change', (e) => {
                 db.ref('siteSettings').update({ featureAbout: e.target.checked });
             });
@@ -497,7 +504,6 @@
                 }).then(() => showNotification('Текст обновлен ✔️', 'bg-[#d82573]'));
             };
 
-            // Отправка сообщения
             window.sendDirectMessage = async function() {
                 const text = document.getElementById('input-chat-message').value;
                 const token = document.getElementById('input-vk-token').value;
